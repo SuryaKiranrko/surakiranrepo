@@ -7,6 +7,7 @@ package brandao.gabriel.address;
 
 
 import brandao.gabriel.address.model.Person;
+import brandao.gabriel.address.view.PersonOverViewController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -84,18 +85,23 @@ public class MainApp extends Application {
      * Mostra o person overview dentro do root layout.
      */
     public void showPersonOverview() {
-        try {
-            // Carrega o person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/PersonOverView.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
-            
-            // Define o person overview dentro do root layout.
-            rootLayout.setCenter(personOverview);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    try {
+        // Carrega a person overview.
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("view/PersonOverview.fxml"));
+        AnchorPane personOverview = (AnchorPane) loader.load();
+
+        // Define a person overview no centro do root layout.
+        rootLayout.setCenter(personOverview);
+
+        // Dá ao controlador acesso à the main app.
+        PersonOverViewController controller = loader.getController();
+        controller.setMainApp(this);
+
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
     
     /**
      * Retorna o palco principal.
