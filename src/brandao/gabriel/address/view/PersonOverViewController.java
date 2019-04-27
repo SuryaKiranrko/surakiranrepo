@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package brandao.gabriel.address.model;
+package brandao.gabriel.address.view;
 
 /**
  *
  * @author gabri_000
  */
-public class Pessoa {
+public class PersonOverViewController {
     
 }
