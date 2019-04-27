@@ -7,6 +7,8 @@ import javafx.scene.control.TableView;
 import brandao.gabriel.address.MainApp;
 import brandao.gabriel.address.model.Person;
 import brandao.gabriel.address.util.DateUtil;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class PersonOverViewController {
     @FXML
@@ -103,6 +105,17 @@ public class PersonOverViewController {
     @FXML
     private void handleDeletePerson() {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
-        personTable.getItems().remove(selectedIndex);
+        if (selectedIndex >= 0) {
+            personTable.getItems().remove(selectedIndex);
+        } else {
+            // Nada selecionado.
+      
+        Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Nenhuma seleção");
+            alert.setHeaderText("Nenhuma Pessoa Selecionada");
+            alert.setContentText("Por favor, selecione uma pessoa na tabela.");
+
+            alert.showAndWait();
+        }
     }
 }
