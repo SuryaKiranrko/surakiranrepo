@@ -45,9 +45,18 @@ public class PersonOverViewController {
      */
     @FXML
     private void initialize() {
-        // Inicializa a tablea de pessoa com duas colunas.
-        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+        // Inicializa a tabela de pessoas com duas colunas.
+        firstNameColumn.setCellValueFactory(
+            cellData -> cellData.getValue().firstNameProperty());
+        lastNameColumn.setCellValueFactory(
+            cellData -> cellData.getValue().lastNameProperty());
+
+        // Limpa os detalhes da pessoa.
+        showPersonDetails(null);
+
+        // Detecta mudanças de seleção e mostra os detalhes da pessoa quando houver mudança.
+        personTable.getSelectionModel().selectedItemProperty().addListener(
+            (observable, oldValue, newValue) -> showPersonDetails(newValue));
     }
 
     /**
