@@ -6,6 +6,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import brandao.gabriel.address.MainApp;
 import brandao.gabriel.address.model.Person;
+import brandao.gabriel.address.util.DateUtil;
 
 public class PersonOverViewController {
     @FXML
@@ -75,9 +76,7 @@ public class PersonOverViewController {
             streetLabel.setText(person.getStreet());
             postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
             cityLabel.setText(person.getCity());
-
-            // TODO: Nós precisamos de uma maneira de converter o aniversário em um String! 
-            // birthdayLabel.setText(...);
+            birthdayLabel.setText(DateUtil.format(person.getBirthday()));
         } else {
             // Person é null, remove todo o texto.
             firstNameLabel.setText("");
