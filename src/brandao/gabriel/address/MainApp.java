@@ -29,10 +29,10 @@ import javax.xml.bind.Unmarshaller;
 
 import brandao.gabriel.address.model.Person;
 import brandao.gabriel.address.model.PersonListWrapper;
-import brandao.gabriel.address.view.BirthdayStatisticsController;
-import brandao.gabriel.address.view.PersonEditDialogController;
-import brandao.gabriel.address.view.PersonOverViewController;
-import brandao.gabriel.address.view.RootLayoutController;
+import brandao.gabriel.address.controller.BirthdayStatisticsController;
+import brandao.gabriel.address.controller.PersonEditDialogController;
+import brandao.gabriel.address.controller.PersonOverViewController;
+import brandao.gabriel.address.controller.RootLayoutController;
 
 public class MainApp extends Application {
     private Stage primaryStage;

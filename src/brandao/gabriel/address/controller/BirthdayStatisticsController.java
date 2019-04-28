@@ -1,4 +1,4 @@
-package brandao.gabriel.address.view;
+package brandao.gabriel.address.controller;
 
 import java.text.DateFormatSymbols;
 import java.util.Arrays;

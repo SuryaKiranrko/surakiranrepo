@@ -1,4 +1,4 @@
-package brandao.gabriel.address.view;
+package brandao.gabriel.address.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
