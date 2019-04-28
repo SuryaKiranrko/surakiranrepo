@@ -6,28 +6,32 @@
 package brandao.gabriel.address;
 
 
-import brandao.gabriel.address.model.Person;
-import brandao.gabriel.address.model.PersonListWrapper;
-import brandao.gabriel.address.view.PersonEditDialogController;
-import brandao.gabriel.address.view.PersonOverViewController;
-import brandao.gabriel.address.view.RootLayoutController;
 import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import org.controlsfx.dialog.Dialogs;
+
+import brandao.gabriel.address.model.Person;
+import brandao.gabriel.address.model.PersonListWrapper;
+import brandao.gabriel.address.view.PersonEditDialogController;
+import brandao.gabriel.address.view.PersonOverViewController;
+import brandao.gabriel.address.view.RootLayoutController;
 
 public class MainApp extends Application {
 
@@ -35,12 +39,12 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
     
     /**
-     * Os dados como uma observable list de Persons.
+     * The data as an observable list of Persons.
      */
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
     /**
-     * Construtor
+     * Constructor
      */
     public MainApp() {
         // Add some sample data
@@ -54,9 +58,9 @@ public class MainApp extends Application {
         personData.add(new Person("Stefan", "Meier"));
         personData.add(new Person("Martin", "Mueller"));
     }
-  
+
     /**
-     * Retorna os dados como uma observable list de Persons. 
+     * Returns the data as an observable list of Persons. 
      * @return
      */
     public ObservableList<Person> getPersonData() {
@@ -67,7 +71,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("AddressApp");
-
+        
         // Set the application icon.
         this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_icon.png"));
 
@@ -75,23 +79,24 @@ public class MainApp extends Application {
 
         showPersonOverview();
     }
-    
+
     /**
-     * Inicializa o root layout (layout base).
+     * Initializes the root layout and tries to load the last opened
+     * person file.
      */
     public void initRootLayout() {
         try {
-            // Carrega o root layout do arquivo fxml.
+            // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class
                     .getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
-            // Mostra a scene (cena) contendo o root layout.
+            // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
 
-            // Dá ao controller o acesso ao main app.
+            // Give the controller access to the main app.
             RootLayoutController controller = loader.getController();
             controller.setMainApp(this);
 
@@ -100,7 +105,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
 
-        // Tenta carregar o último arquivo de pessoa aberto.
+        // Try to load last opened person file.
         File file = getPersonFilePath();
         if (file != null) {
             loadPersonDataFromFile(file);
@@ -108,19 +113,19 @@ public class MainApp extends Application {
     }
 
     /**
-     * Mostra o person overview dentro do root layout.
+     * Shows the person overview inside the root layout.
      */
     public void showPersonOverview() {
         try {
-            // Carrega a person overview.
+            // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/PersonOverView.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
 
-            // Define a person overview no centro do root layout.
+            // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
 
-            // Dá ao controlador acesso à the main app.
+            // Give the controller access to the main app.
             PersonOverViewController controller = loader.getController();
             controller.setMainApp(this);
 
@@ -128,21 +133,23 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+    
     /**
-    * Abre uma janela para editar detalhes para a pessoa especificada. Se o usuário clicar
-    * OK, as mudanças são salvasno objeto pessoa fornecido e retorna true.
-    * 
-    * @param person O objeto pessoa a ser editado
-    * @return true Se o usuário clicou OK,  caso contrário false.
-    */
+     * Opens a dialog to edit details for the specified person. If the user
+     * clicks OK, the changes are saved into the provided person object and true
+     * is returned.
+     * 
+     * @param person the person object to be edited
+     * @return true if the user clicked OK, false otherwise.
+     */
     public boolean showPersonEditDialog(Person person) {
         try {
-            // Carrega o arquivo fxml e cria um novo stage para a janela popup.
+            // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/PersonEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
-            // Cria o palco dialogStage.
+            // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Person");
             dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -150,12 +157,15 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Define a pessoa no controller.
+            // Set the person into the controller.
             PersonEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setPerson(person);
 
-            // Mostra a janela e espera até o usuário fechar.
+            // Set the dialog icon.
+            dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
+            
+            // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
             return controller.isOkClicked();
@@ -166,24 +176,12 @@ public class MainApp extends Application {
     }
     
     /**
-     * Retorna o palco principal.
+     * Returns the person file preference, i.e. the file that was last opened.
+     * The preference is read from the OS specific registry. If no such
+     * preference can be found, null is returned.
+     * 
      * @return
      */
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
-    /**
-    * Retorna o arquivo de preferências da pessoa, o último arquivo que foi aberto.
-    * As preferências são lidas do registro específico do SO (Sistema Operacional). 
-    * Se tais prefêrencias não puderem  ser encontradas, ele retorna null.
-    * 
-    * @return
-    */
     public File getPersonFilePath() {
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         String filePath = prefs.get("filePath", null);
@@ -195,11 +193,11 @@ public class MainApp extends Application {
     }
 
     /**
-    * Define o caminho do arquivo do arquivo carregado atual. O caminho é persistido no
-    * registro específico do SO (Sistema Operacional).
-    * 
-    * @param file O arquivo ou null para remover o caminho
-    */
+     * Sets the file path of the currently loaded file. The path is persisted in
+     * the OS specific registry.
+     * 
+     * @param file the file or null to remove the path
+     */
     public void setPersonFilePath(File file) {
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         if (file != null) {
@@ -216,15 +214,15 @@ public class MainApp extends Application {
     }
     
     /**
-    * Carrega os dados da pessoa do arquivo especificado. A pessoa atual
-    * será substituída.
-    * 
-    * @param file
-    */
+     * Loads person data from the specified file. The current person data will
+     * be replaced.
+     * 
+     * @param file
+     */
     public void loadPersonDataFromFile(File file) {
         try {
             JAXBContext context = JAXBContext
-                .newInstance(PersonListWrapper.class);
+                    .newInstance(PersonListWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
 
             // Reading XML from the file and unmarshalling.
@@ -237,18 +235,20 @@ public class MainApp extends Application {
             setPersonFilePath(file);
 
         } catch (Exception e) { // catches ANY exception
-            Dialogs.create()
-                    .title("Erro")
-                    .masthead("Não foi possível carregar dados do arquivo:\n" 
-                            + file.getPath()).showException(e);
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error");
+        	alert.setHeaderText("Could not load data");
+        	alert.setContentText("Could not load data from file:\n" + file.getPath());
+        	
+        	alert.showAndWait();
         }
     }
 
     /**
-    * Salva os dados da pessoa atual no arquivo especificado.
-    * 
-    * @param file
-    */
+     * Saves the current person data to the specified file.
+     * 
+     * @param file
+     */
     public void savePersonDataToFile(File file) {
         try {
             JAXBContext context = JAXBContext
@@ -256,19 +256,34 @@ public class MainApp extends Application {
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-            // Envolvendo nossos dados da pessoa.
+            // Wrapping our person data.
             PersonListWrapper wrapper = new PersonListWrapper();
             wrapper.setPersons(personData);
 
-            // Enpacotando e salvando XML  no arquivo.
+            // Marshalling and saving XML to the file.
             m.marshal(wrapper, file);
 
-            // Saalva o caminho do arquivo no registro.
+            // Save the file path to the registry.
             setPersonFilePath(file);
         } catch (Exception e) { // catches ANY exception
-            Dialogs.create().title("Erro")
-                    .masthead("Não foi possível salvar os dados do arquivo:\n" 
-                              + file.getPath()).showException(e);
+        	Alert alert = new Alert(AlertType.ERROR);
+        	alert.setTitle("Error");
+        	alert.setHeaderText("Could not save data");
+        	alert.setContentText("Could not save data to file:\n" + file.getPath());
+        	
+        	alert.showAndWait();
         }
+    }
+
+    /**
+     * Returns the main stage.
+     * @return
+     */
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

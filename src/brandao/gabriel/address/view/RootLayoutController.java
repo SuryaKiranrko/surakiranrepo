@@ -1,27 +1,27 @@
 package brandao.gabriel.address.view;
+
 import java.io.File;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
-
-import org.controlsfx.dialog.Dialogs;
-
 import brandao.gabriel.address.MainApp;
 
 /**
- * O controlador para o root layout. O root layout provê um layout básico
- * para a aplicação contendo uma barra de menu e um espaço onde outros elementos
- * JavaFX podem ser colocados.
+ * The controller for the root layout. The root layout provides the basic
+ * application layout containing a menu bar and space where other JavaFX
+ * elements can be placed.
  * 
  * @author Marco Jakob
  */
 public class RootLayoutController {
 
-    // Referência à aplicação principal
+    // Reference to the main application
     private MainApp mainApp;
 
     /**
-     * É chamado pela aplicação principal para referenciar a si mesma.
+     * Is called by the main application to give a reference back to itself.
      * 
      * @param mainApp
      */
@@ -30,7 +30,7 @@ public class RootLayoutController {
     }
 
     /**
-     * Cria uma agenda vazia.
+     * Creates an empty address book.
      */
     @FXML
     private void handleNew() {
@@ -39,18 +39,18 @@ public class RootLayoutController {
     }
 
     /**
-     * Abre o FileChooser para permitir o usuário selecionar uma agenda
-     * para carregar.
+     * Opens a FileChooser to let the user select an address book to load.
      */
     @FXML
     private void handleOpen() {
         FileChooser fileChooser = new FileChooser();
 
-        // Define um filtro de extensão
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        // Mostra a janela de salvar arquivo
+        // Show save file dialog
         File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
         if (file != null) {
@@ -59,8 +59,8 @@ public class RootLayoutController {
     }
 
     /**
-     * Salva o arquivo para o arquivo de pessoa aberto atualmente. Se não houver
-     * arquivo aberto, a janela "salvar como" é mostrada.
+     * Saves the file to the person file that is currently open. If there is no
+     * open file, the "save as" dialog is shown.
      */
     @FXML
     private void handleSave() {
@@ -73,22 +73,22 @@ public class RootLayoutController {
     }
 
     /**
-     * Abre um FileChooser para permitir o usuário selecionar um arquivo
-     * para salvar.
+     * Opens a FileChooser to let the user select a file to save to.
      */
     @FXML
     private void handleSaveAs() {
         FileChooser fileChooser = new FileChooser();
 
-        // Define o filtro de extensão
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        // Mostra a janela para salvar arquivo
+        // Show save file dialog
         File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
 
         if (file != null) {
-            // Certifica de que esta é a extensão correta
+            // Make sure it has the correct extension
             if (!file.getPath().endsWith(".xml")) {
                 file = new File(file.getPath() + ".xml");
             }
@@ -97,19 +97,20 @@ public class RootLayoutController {
     }
 
     /**
-     * Abre uma janela Sobre.
+     * Opens an about dialog.
      */
     @FXML
     private void handleAbout() {
-        Dialogs.create()
-            .title("AddressApp")
-            .masthead("Sobre")
-            .message("Autor: Marco Jakob\nWebsite: http://code.makery.ch")
-            .showInformation();
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("AddressApp");
+    	alert.setHeaderText("About");
+    	alert.setContentText("Author: Marco Jakob\nWebsite: http://code.makery.ch");
+
+    	alert.showAndWait();
     }
 
     /**
-     * Fecha a aplicação.
+     * Closes the application.
      */
     @FXML
     private void handleExit() {
