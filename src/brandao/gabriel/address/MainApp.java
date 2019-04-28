@@ -10,6 +10,7 @@ import brandao.gabriel.address.model.Person;
 import brandao.gabriel.address.model.PersonListWrapper;
 import brandao.gabriel.address.view.PersonEditDialogController;
 import brandao.gabriel.address.view.PersonOverViewController;
+import brandao.gabriel.address.view.RootLayoutController;
 import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
@@ -82,15 +83,27 @@ public class MainApp extends Application {
         try {
             // Carrega o root layout do arquivo fxml.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
+            loader.setLocation(MainApp.class
+                    .getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
-            
+
             // Mostra a scene (cena) contendo o root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+
+            // Dá ao controller o acesso ao main app.
+            RootLayoutController controller = loader.getController();
+            controller.setMainApp(this);
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        // Tenta carregar o último arquivo de pessoa aberto.
+        File file = getPersonFilePath();
+        if (file != null) {
+            loadPersonDataFromFile(file);
         }
     }
 
