@@ -35,7 +35,6 @@ import brandao.gabriel.address.view.PersonOverViewController;
 import brandao.gabriel.address.view.RootLayoutController;
 
 public class MainApp extends Application {
-
     private Stage primaryStage;
     private BorderPane rootLayout;
     
