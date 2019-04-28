@@ -33,8 +33,10 @@ import brandao.gabriel.address.controller.BirthdayStatisticsController;
 import brandao.gabriel.address.controller.PersonEditDialogController;
 import brandao.gabriel.address.controller.PersonOverViewController;
 import brandao.gabriel.address.controller.RootLayoutController;
+import brandao.gabriel.address.initializer.RootLayoutInitializer;
 
 public class MainApp extends Application {
+    private volatile static MainApp instance;
     private Stage primaryStage;
     private BorderPane rootLayout;
     
@@ -58,6 +60,15 @@ public class MainApp extends Application {
         personData.add(new Person("Stefan", "Meier"));
         personData.add(new Person("Martin", "Mueller"));
     }
+    
+    public static MainApp getInstance() {
+        if(instance == null) {
+            synchronized(MainApp.class) {
+                if(instance == null) instance = new MainApp();
+            }
+        }
+        return instance;
+    }
 
     /**
      * Returns the data as an observable list of Persons. 
@@ -74,42 +85,20 @@ public class MainApp extends Application {
         
         // Set the application icon.
         this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_icon.png"));
-
-        initRootLayout();
-
-        showPersonOverview();
-    }
-
-    /**
-     * Initializes the root layout and tries to load the last opened
-     * person file.
-     */
-    public void initRootLayout() {
-        try {
-            // Load root layout from fxml file.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class
-                    .getResource("view/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
-
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-
-            // Give the controller access to the main app.
-            RootLayoutController controller = loader.getController();
-            controller.setMainApp(this);
-
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        rootLayout = RootLayoutInitializer.getInstance().getLoadedLayout();
+        
         // Try to load last opened person file.
         File file = getPersonFilePath();
         if (file != null) {
             loadPersonDataFromFile(file);
         }
+        
+        // Show the scene containing the root layout.
+        Scene scene = new Scene(rootLayout);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        showPersonOverview();
     }
 
     /**
