@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persons>
+    <person>
+        <birthday>2001-09-02</birthday>
+        <city>Betim</city>
+        <firstName>Gabriel</firstName>
+        <lastName>Brandão</lastName>
+        <postalCode>1234</postalCode>
+        <street>Rua Tarumirim</street>
+    </person>
+    <person>
+        <birthday>2001-07-14</birthday>
+        <city>Ibiritexas</city>
+        <firstName>Ana Flávia</firstName>
+        <lastName>Brito</lastName>
+        <postalCode>1234</postalCode>
+        <street>Meu coração</street>
+    </person>
+    <person>
+        <birthday>2002-06-27</birthday>
+        <city>Belo Horizonte</city>
+        <firstName>Ana Luísa</firstName>
+        <lastName>Pimenta</lastName>
+        <postalCode>1234</postalCode>
+        <street>Rogério Street</street>
+    </person>
+    <person>
+        <birthday>2002-01-02</birthday>
+        <city>Contagem</city>
+        <firstName>Guilherme</firstName>
+        <lastName>da Silva</lastName>
+        <postalCode>1234</postalCode>
+        <street>Bobo Street</street>
+    </person>
+</persons>
