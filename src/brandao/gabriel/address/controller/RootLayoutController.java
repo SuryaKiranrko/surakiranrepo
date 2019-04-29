@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import brandao.gabriel.address.MainApp;
+import brandao.gabriel.address.initializer.BirthdayStatisticsInitializer;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -114,6 +115,6 @@ public class RootLayoutController extends Controller {
     */
     @FXML
     private void handleShowBirthdayStatistics() {
-        mainApp.showBirthdayStatistics();
+        BirthdayStatisticsInitializer.getInstance().showBirthdayStatistics();
     }
 }
