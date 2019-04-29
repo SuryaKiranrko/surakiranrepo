@@ -1,4 +1,9 @@
-package brandao.gabriel.address;
+package brandao.gabriel.address.util;
+
+/**
+ * 
+ * @author gabri_000
+ */
 
 public class InputValidator {
     

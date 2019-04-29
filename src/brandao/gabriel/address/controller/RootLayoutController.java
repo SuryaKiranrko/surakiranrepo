@@ -6,8 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
-import brandao.gabriel.address.MainApp;
 import brandao.gabriel.address.initializer.BirthdayStatisticsInitializer;
+import brandao.gabriel.address.util.FileHandler;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -28,7 +28,7 @@ public class RootLayoutController extends Controller {
     @FXML
     private void handleNew() {
         mainApp.getPersonData().clear();
-        mainApp.setPersonFilePath(null);
+        FileHandler.setFilePath(null);;
     }
 
     /**
@@ -47,7 +47,7 @@ public class RootLayoutController extends Controller {
         File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
         if (file != null) {
-            mainApp.loadPersonDataFromFile(file);
+            FileHandler.loadPersonFromFile(file);
         }
     }
 
@@ -57,9 +57,9 @@ public class RootLayoutController extends Controller {
      */
     @FXML
     private void handleSave() {
-        File personFile = mainApp.getPersonFilePath();
+        File personFile = FileHandler.getFilePath();
         if (personFile != null) {
-            mainApp.savePersonDataToFile(personFile);
+            FileHandler.savePersonToFile(personFile);
         } else {
             handleSaveAs();
         }
@@ -85,7 +85,7 @@ public class RootLayoutController extends Controller {
             if (!file.getPath().endsWith(".xml")) {
                 file = new File(file.getPath() + ".xml");
             }
-            mainApp.savePersonDataToFile(file);
+            FileHandler.savePersonToFile(file);
         }
     }
 
