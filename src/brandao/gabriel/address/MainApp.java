@@ -26,6 +26,7 @@ import brandao.gabriel.address.model.Person;
 import brandao.gabriel.address.model.PersonListWrapper;
 import brandao.gabriel.address.controller.BirthdayStatisticsController;
 import brandao.gabriel.address.controller.PersonEditDialogController;
+import brandao.gabriel.address.initializer.PersonEditDialogInitializer;
 import brandao.gabriel.address.initializer.PersonOverViewInitializer;
 import brandao.gabriel.address.initializer.RootLayoutInitializer;
 
@@ -34,25 +35,18 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     
-    /**
-     * The data as an observable list of Persons.
-     */
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
-    /**
-     * Constructor
-     */
     public MainApp() {
-        // Add some sample data
-        personData.add(new Person("Hans", "Muster"));
-        personData.add(new Person("Ruth", "Mueller"));
-        personData.add(new Person("Heinz", "Kurz"));
-        personData.add(new Person("Cornelia", "Meier"));
-        personData.add(new Person("Werner", "Meyer"));
-        personData.add(new Person("Lydia", "Kunz"));
-        personData.add(new Person("Anna", "Best"));
-        personData.add(new Person("Stefan", "Meier"));
-        personData.add(new Person("Martin", "Mueller"));
+        personData.add(new Person("Zé", "Wilson"));
+        personData.add(new Person("William", "Sallum"));
+        personData.add(new Person("Cristiano", "Maffort"));
+        personData.add(new Person("Flávio", "Coutinho"));
+        personData.add(new Person("Glivia", "Angelica"));
+        personData.add(new Person("Edson", "Marchetti"));
+        personData.add(new Person("Marcao", "Amaral"));
+        personData.add(new Person("Daniel", "Hasan"));
+        personData.add(new Person("Adelson", "Silva"));
     }
     
     public static MainApp getInstance() {
@@ -64,10 +58,6 @@ public class MainApp extends Application {
         return instance;
     }
 
-    /**
-     * Returns the data as an observable list of Persons. 
-     * @return
-     */
     public ObservableList<Person> getPersonData() {
         return personData;
     }
@@ -77,7 +67,6 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("AddressApp");
         
-        // Set the application icon.
         this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_icon.png"));
         rootLayout = (BorderPane) RootLayoutInitializer.getInstance().getLoadedFXML();
         
@@ -102,46 +91,6 @@ public class MainApp extends Application {
         rootLayout.setCenter(personOverView);
     }
     
-    /**
-     * Opens a dialog to edit details for the specified person. If the user
-     * clicks OK, the changes are saved into the provided person object and true
-     * is returned.
-     * 
-     * @param person the person object to be edited
-     * @return true if the user clicked OK, false otherwise.
-     */
-    public boolean showPersonEditDialog(Person person) {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/PersonEditDialog.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Person");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            // Set the person into the controller.
-            PersonEditDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setPerson(person);
-
-            // Set the dialog icon.
-            dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
-            
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
-
-            return controller.isOkClicked();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
     
     /**
      * Returns the person file preference, i.e. the file that was last opened.
@@ -243,10 +192,7 @@ public class MainApp extends Application {
         }
     }
 
-    /**
-     * Returns the main stage.
-     * @return
-     */
+    
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -255,9 +201,7 @@ public class MainApp extends Application {
         launch(args);
     }
     
-    /**
-    * Abre uma janela para mostrar as estatísticas de aniversário.
-    */
+    
     public void showBirthdayStatistics() {
         try {
             // Carrega o arquivo fxml e cria um novo palco para o popup.

@@ -1,10 +1,10 @@
 package brandao.gabriel.address.controller;
 
+import brandao.gabriel.address.initializer.PersonEditDialogInitializer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import brandao.gabriel.address.MainApp;
 import brandao.gabriel.address.model.Person;
 import brandao.gabriel.address.util.DateUtil;
 import javafx.scene.control.Alert;
@@ -110,7 +110,7 @@ public class PersonOverViewController extends Controller {
 @FXML
 private void handleNewPerson() {
     Person tempPerson = new Person();
-    boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
+    boolean okClicked = PersonEditDialogInitializer.getInstance().showPersonEditDialog(tempPerson);
     if (okClicked) {
         mainApp.getPersonData().add(tempPerson);
     }
@@ -124,7 +124,7 @@ private void handleNewPerson() {
     private void handleEditPerson() {
         Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
-            boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
+            boolean okClicked = PersonEditDialogInitializer.getInstance().showPersonEditDialog(selectedPerson);
             if (okClicked) {
                 showPersonDetails(selectedPerson);
             }

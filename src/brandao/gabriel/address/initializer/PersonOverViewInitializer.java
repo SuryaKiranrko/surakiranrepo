@@ -29,7 +29,7 @@ public class PersonOverViewInitializer implements IInitializer {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class
-                    .getResource("view/RootLayout.fxml"));
+                    .getResource("view/PersonOverView.fxml"));
             loadedFXML = (AnchorPane) loader.load();
         } catch (IOException e) {
             e.printStackTrace();
