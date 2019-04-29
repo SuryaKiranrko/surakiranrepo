@@ -2,6 +2,7 @@ package brandao.gabriel.address.model;
 
 import brandao.gabriel.address.util.LocalDateAdapter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -24,6 +25,7 @@ public class Person {
     private final IntegerProperty postalCode;
     private final StringProperty city;
     private final ObjectProperty<LocalDate> birthday;
+    private final ArrayList<String> personFields;
 
     /**
      *  Construtor padrão.
@@ -39,6 +41,7 @@ public class Person {
      * @param lastName Sobrenome da Pessoa.
      */
     public Person(String firstName, String lastName) {
+        this.personFields = new ArrayList<>();
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         
@@ -46,7 +49,14 @@ public class Person {
         this.street = new SimpleStringProperty("some street");
         this.postalCode = new SimpleIntegerProperty(1234);
         this.city = new SimpleStringProperty("some city");
-        this.birthday = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+        this.birthday = new SimpleObjectProperty<>(LocalDate.of(1999, 2, 21));
+        personFields.add(firstName);
+        personFields.add(lastName);
+        personFields.add(street.toString());
+        personFields.add(postalCode.toString());
+        personFields.add(city.toString());
+        personFields.add(birthday.toString());
+        
     }
     
     public String getFirstName() {
@@ -120,5 +130,9 @@ public class Person {
     
     public ObjectProperty<LocalDate> birthdayProperty() {
         return birthday;
+    }
+
+    public ArrayList<String> getPersonFields() {
+        return personFields;
     }
 }

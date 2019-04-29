@@ -1,5 +1,6 @@
 package brandao.gabriel.address.controller;
 
+import brandao.gabriel.address.InputValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -111,40 +112,16 @@ public class PersonEditDialogController extends Controller {
      */
     private boolean isInputValid() {
         String errorMessage = "";
-
-        if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
-            errorMessage += "Nome inválido!\n"; 
+        for(String field : person.getPersonFields()) {
+            if(InputValidator.isFieldEmpty(field)) errorMessage = "Campo(s) vazio(s).";
         }
-        if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
-            errorMessage += "Sobrenome inválido!\n"; 
+        if(!InputValidator.isFieldANumber(postalCodeField.getText())){
+            errorMessage += "Código Postal inválido (deve ser um inteiro)!\n"; 
         }
-        if (streetField.getText() == null || streetField.getText().length() == 0) {
-            errorMessage += "Rua inválida!\n"; 
+        if (!DateUtil.validDate(birthdayField.getText())) {
+            errorMessage += "Aniversário inválido. Use o formato dd.mm.yyyy!\n";
         }
-
-        if (postalCodeField.getText() == null || postalCodeField.getText().length() == 0) {
-            errorMessage += "Código Postal inválido!\n"; 
-        } else {
-            // tenta converter o código postal em um int.
-            try {
-                Integer.parseInt(postalCodeField.getText());
-            } catch (NumberFormatException e) {
-                errorMessage += "Código Postal inválido (deve ser um inteiro)!\n"; 
-            }
-        }
-
-        if (cityField.getText() == null || cityField.getText().length() == 0) {
-            errorMessage += "Cidade inválida!\n"; 
-        }
-
-        if (birthdayField.getText() == null || birthdayField.getText().length() == 0) {
-            errorMessage += "Aniversário inválido!\n";
-        } else {
-            if (!DateUtil.validDate(birthdayField.getText())) {
-                errorMessage += "Aniversário inválido. Use o formato dd.mm.yyyy!\n";
-            }
-        }
-
+        
         if (errorMessage.length() == 0) {
             return true;
         } else {
@@ -158,4 +135,37 @@ public class PersonEditDialogController extends Controller {
             return false;
         }
     }
+
+    public TextField getFirstNameField() {
+        return firstNameField;
+    }
+
+    public TextField getLastNameField() {
+        return lastNameField;
+    }
+
+    public TextField getStreetField() {
+        return streetField;
+    }
+
+    public TextField getPostalCodeField() {
+        return postalCodeField;
+    }
+
+    public TextField getCityField() {
+        return cityField;
+    }
+
+    public TextField getBirthdayField() {
+        return birthdayField;
+    }
+
+    public Stage getDialogStage() {
+        return dialogStage;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+    
 }
