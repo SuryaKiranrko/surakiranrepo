@@ -2,7 +2,6 @@ package brandao.gabriel.address;
 
 
 import java.io.File;
-import java.util.prefs.Preferences;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -15,19 +14,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
 import brandao.gabriel.address.model.Person;
-import brandao.gabriel.address.model.PersonListWrapper;
 import brandao.gabriel.address.initializer.PersonOverViewInitializer;
 import brandao.gabriel.address.initializer.RootLayoutInitializer;
 import brandao.gabriel.address.util.FileHandler;
 
 public class MainApp extends Application {
     private volatile static MainApp instance;
-    private Stage primaryStage;
+    public Stage primaryStage;
     private BorderPane rootLayout;
     
     private ObservableList<Person> personData = FXCollections.observableArrayList();

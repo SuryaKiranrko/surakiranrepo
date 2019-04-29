@@ -53,7 +53,7 @@ public class PersonEditDialogInitializer implements IInitializer {
             dialogStage.setTitle("Edit Person");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(MainApp.getInstance().getPrimaryStage());
-            Scene scene = new Scene(loadedFXML);
+            Scene scene = new Scene(getLoadedFXML());
             dialogStage.setScene(scene);
 
             controller.setDialogStage(dialogStage);

@@ -10,18 +10,18 @@ import javax.xml.bind.Unmarshaller;
 
 public class FileHandler {
     public static void setFilePath(File file){
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+        Preferences prefs = Preferences.userNodeForPackage(FileHandler.class);
         if (file != null) {
             prefs.put("filePath", file.getPath());
-            MainApp.getInstance().getPrimaryStage().setTitle("AddressApp - " + file.getName());
+//            MainApp.getInstance().getPrimaryStage().setTitle("AddressApp - " + file.getName());
         } else {
             prefs.remove("filePath");
-            MainApp.getInstance().getPrimaryStage().setTitle("AddressApp");
+//            MainApp.getInstance().getPrimaryStage().setTitle("AddressApp");
         }
     }
     
     public static File getFilePath() {
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+        Preferences prefs = Preferences.userNodeForPackage(FileHandler.class);
         String filePath = prefs.get("filePath", null);
         if (filePath != null) {
             return new File(filePath);
@@ -44,6 +44,7 @@ public class FileHandler {
             setFilePath(file);
 
         } catch (Exception e) {
+            e.printStackTrace();
             MainApp.getInstance().showAlert("Error", "Could not load data", "Could not load data from file:\n" + file.getPath());
         }
     }
@@ -65,7 +66,8 @@ public class FileHandler {
             // Save the file path to the registry.
             FileHandler.setFilePath(file);
         } catch (Exception e) { 
-        	MainApp.getInstance().showAlert("Error", "Could not save data", "Could not save data to file:\n" + file.getPath());
+            e.printStackTrace();
+            MainApp.getInstance().showAlert("Error", "Could not save data", "Could not save data to file:\n" + file.getPath());
         }
     }
 }
