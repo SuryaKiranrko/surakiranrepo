@@ -15,7 +15,7 @@ import brandao.gabriel.address.util.DateUtil;
  * 
  * @author Marco Jakob
  */
-public class PersonEditDialogController extends Controller {
+public class PersonEditDialogController {
 
     @FXML
     private TextField firstNameField;

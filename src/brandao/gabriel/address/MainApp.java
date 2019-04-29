@@ -32,6 +32,7 @@ import brandao.gabriel.address.model.PersonListWrapper;
 import brandao.gabriel.address.controller.BirthdayStatisticsController;
 import brandao.gabriel.address.controller.PersonEditDialogController;
 import brandao.gabriel.address.controller.PersonOverViewController;
+import brandao.gabriel.address.controller.RootLayoutController;
 import brandao.gabriel.address.initializer.RootLayoutInitializer;
 
 public class MainApp extends Application {
@@ -97,30 +98,30 @@ public class MainApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-//        showPersonOverview();
+        showPersonOverview();
     }
 
     /**
      * Shows the person overview inside the root layout.
      */
-//    public void showPersonOverview() {
-//        try {
-//            // Load person overview.
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(MainApp.class.getResource("view/PersonOverView.fxml"));
-//            AnchorPane personOverview = (AnchorPane) loader.load();
-//
-//            // Set person overview into the center of root layout.
-//            rootLayout.setCenter(personOverview);
-//
-//            // Give the controller access to the main app.
-//            PersonOverViewController controller = loader.getController();
-//            controller.setMainApp(this);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void showPersonOverview() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/PersonOverView.fxml"));
+            AnchorPane personOverview = (AnchorPane) loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(personOverview);
+
+            // Give the controller access to the main app.
+            PersonOverViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * Opens a dialog to edit details for the specified person. If the user

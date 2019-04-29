@@ -10,7 +10,7 @@ import brandao.gabriel.address.util.DateUtil;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class PersonOverViewController extends Controller {
+public class PersonOverViewController {
     @FXML
     private TableView<Person> personTable;
     @FXML
@@ -31,8 +31,14 @@ public class PersonOverViewController extends Controller {
     @FXML
     private Label birthdayLabel;
 
+    // Reference to the main application.
+    private MainApp mainApp;
+
+    /**
+     * O construtor.
+     * O construtor é chamado antes do método inicialize().
+     */
     public PersonOverViewController() {
-        super();
     }
 
     /**
@@ -53,6 +59,17 @@ public class PersonOverViewController extends Controller {
         // Detecta mudanças de seleção e mostra os detalhes da pessoa quando houver mudança.
         personTable.getSelectionModel().selectedItemProperty().addListener(
             (observable, oldValue, newValue) -> showPersonDetails(newValue));
+    }
+
+    /**
+     * É chamado pela aplicação principal para dar uma referência de volta a si mesmo.
+     * 
+     * @param mainApp
+     */
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+
+        // Adiciona os dados da observable list na tabela
         personTable.setItems(mainApp.getPersonData());
     }
     

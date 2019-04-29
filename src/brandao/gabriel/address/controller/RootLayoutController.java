@@ -15,12 +15,19 @@ import brandao.gabriel.address.MainApp;
  * 
  * @author Marco Jakob
  */
-public class RootLayoutController extends Controller {
+public class RootLayoutController {
 
-    public RootLayoutController() {
-        super();
+    // Reference to the main application
+    private MainApp mainApp;
+
+    /**
+     * Is called by the main application to give a reference back to itself.
+     * 
+     * @param mainApp
+     */
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
     }
-   
 
     /**
      * Creates an empty address book.
