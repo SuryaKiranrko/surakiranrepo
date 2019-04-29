@@ -18,7 +18,7 @@ import brandao.gabriel.address.model.Person;
  * 
  * @author Marco Jakob
  */
-public class BirthdayStatisticsController {
+public class BirthdayStatisticsController extends Controller {
 
     @FXML
     private BarChart<String, Integer> barChart;

@@ -32,7 +32,6 @@ import brandao.gabriel.address.model.PersonListWrapper;
 import brandao.gabriel.address.controller.BirthdayStatisticsController;
 import brandao.gabriel.address.controller.PersonEditDialogController;
 import brandao.gabriel.address.controller.PersonOverViewController;
-import brandao.gabriel.address.controller.RootLayoutController;
 import brandao.gabriel.address.initializer.RootLayoutInitializer;
 
 public class MainApp extends Application {
@@ -85,7 +84,7 @@ public class MainApp extends Application {
         
         // Set the application icon.
         this.primaryStage.getIcons().add(new Image("file:resources/images/address_book_icon.png"));
-        rootLayout = RootLayoutInitializer.getInstance().getLoadedLayout();
+        rootLayout = (BorderPane) RootLayoutInitializer.getInstance().getLoadedFXML();
         
         // Try to load last opened person file.
         File file = getPersonFilePath();
