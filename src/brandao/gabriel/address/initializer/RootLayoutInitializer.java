@@ -1,7 +1,6 @@
 package brandao.gabriel.address.initializer;
 
-import brandao.gabriel.address.MainApp;
-import brandao.gabriel.address.controller.RootLayoutController;
+import brandao.gabriel.address.MainApp;;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
@@ -32,9 +31,6 @@ public class RootLayoutInitializer implements IInitializer {
             loader.setLocation(MainApp.class
                     .getResource("view/RootLayout.fxml"));
             loadedFXML = (BorderPane) loader.load();
-            // Give the controller access to the main app.
-            RootLayoutController controller = loader.getController();
-            controller.setMainApp(MainApp.getInstance());
         } catch (IOException e) {
             e.printStackTrace();
         }

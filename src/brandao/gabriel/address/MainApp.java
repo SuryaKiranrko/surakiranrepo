@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package brandao.gabriel.address;
 
 
@@ -31,7 +26,7 @@ import brandao.gabriel.address.model.Person;
 import brandao.gabriel.address.model.PersonListWrapper;
 import brandao.gabriel.address.controller.BirthdayStatisticsController;
 import brandao.gabriel.address.controller.PersonEditDialogController;
-import brandao.gabriel.address.controller.PersonOverViewController;
+import brandao.gabriel.address.initializer.PersonOverViewInitializer;
 import brandao.gabriel.address.initializer.RootLayoutInitializer;
 
 public class MainApp extends Application {
@@ -92,34 +87,19 @@ public class MainApp extends Application {
             loadPersonDataFromFile(file);
         }
         
-        // Show the scene containing the root layout.
+        initRootLayout();
+        showPersonOverview();
+    }
+    
+    private void initRootLayout() {
         Scene scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        showPersonOverview();
     }
 
-    /**
-     * Shows the person overview inside the root layout.
-     */
     public void showPersonOverview() {
-        try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/PersonOverView.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(personOverview);
-
-            // Give the controller access to the main app.
-            PersonOverViewController controller = loader.getController();
-            controller.setMainApp(this);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        AnchorPane personOverView = (AnchorPane)PersonOverViewInitializer.getInstance().getLoadedFXML();
+        rootLayout.setCenter(personOverView);
     }
     
     /**
