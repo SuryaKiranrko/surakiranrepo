@@ -43,7 +43,6 @@ public class BirthdayStatisticsInitializer implements IInitializer {
             e.printStackTrace();
         }
         
-   
         return loadedFXML;
     }
     
@@ -53,7 +52,7 @@ public class BirthdayStatisticsInitializer implements IInitializer {
         dialogStage.setTitle("Birthday Statistics");
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.initOwner(MainApp.getInstance().getPrimaryStage());
-        Scene scene = new Scene(loadedFXML);
+        Scene scene = new Scene(getLoadedFXML());
         dialogStage.setScene(scene);
         controller.setPersonData(personData);
 
