@@ -3,6 +3,7 @@ package brandao.gabriel.address;
 
 import java.io.File;
 
+import brandao.gabriel.address.util.SQL;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,6 +67,7 @@ public class MainApp extends Application {
         
         initRootLayout();
         showPersonOverview();
+        SQL.getConnection();
     }
     
     private void initRootLayout() {
