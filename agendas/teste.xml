@@ -32,4 +32,12 @@
         <postalCode>1234</postalCode>
         <street>Bobo Street</street>
     </person>
+    <person>
+        <birthday>1999-02-21</birthday>
+        <city>some city</city>
+        <firstName>aaa</firstName>
+        <lastName>aaa</lastName>
+        <postalCode>1234</postalCode>
+        <street>some street</street>
+    </person>
 </persons>
